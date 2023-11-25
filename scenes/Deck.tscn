@@ -4,29 +4,29 @@
 [ext_resource type="Texture2D" uid="uid://dawenc653dren" path="res://assets/img/cards/BACK.png" id="1_cxrx2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8qi83"]
-size = Vector2(90, 140)
+size = Vector2(90, 146)
 
 [node name="Deck" type="Node2D"]
 script = ExtResource("1_06h0y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 14)
 texture = ExtResource("1_cxrx2")
 centered = false
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(0, 7)
+position = Vector2(0, 10)
 texture = ExtResource("1_cxrx2")
 centered = false
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(0, 20)
 texture = ExtResource("1_cxrx2")
 centered = false
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(45, 70)
+position = Vector2(45, 73)
 shape = SubResource("RectangleShape2D_8qi83")
 
 [node name="Timer" type="Timer" parent="."]

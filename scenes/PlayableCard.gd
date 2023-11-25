@@ -32,10 +32,6 @@ func _process(delta):
 	match movementState:
 		CARD_MOVEMENT.ATTACK:
 			pass
-#			var _offsetAttack =  royaltyCardToAttack.attackedCardsLayer.get_children().size() * 30
-#			reparent(royaltyCardToAttack.attackedCardsLayer)
-#			global_position = royaltyCardToAttack.global_position + Vector2(0, 10 + _offsetAttack)	
-#			movementState = 5
 		CARD_MOVEMENT.DRAGGED:
 			global_position = get_global_mouse_position() - dragOffset
 		CARD_MOVEMENT.RELEASED:
@@ -67,17 +63,20 @@ func removeAndDelete():
 func _on_area_2d_area_entered(area):
 	if movementState != CARD_MOVEMENT.ATTACK:	
 		var _royaltyCaryd:RoyaltyCard = area.get_parent()
-		print("Entrando ", _royaltyCaryd)
-		if _royaltyCaryd != null:
+		if _royaltyCaryd != null && _royaltyCaryd.active == true:
 			royaltyCardToAttack = _royaltyCaryd
 
 func _on_area_2d_area_exited(area):
 	if movementState != CARD_MOVEMENT.ATTACK:
 		var _royaltyCaryd:RoyaltyCard = area.get_parent()
-		print("Saliendo ", _royaltyCaryd)
-		if _royaltyCaryd != null:
+		if _royaltyCaryd != null && _royaltyCaryd.active == true:
 			royaltyCardToAttack = null
 		
 func attackToRoyaltyCard():
 	pass
+	
+func releasedMaxAttackedCard():
+	global_position = initial_position
+	royaltyCardToAttack = null
+	movementState = CARD_MOVEMENT.RELEASED
 

@@ -33,7 +33,9 @@ func _ready():
 	
 	#Spawn playableCards 
 	randomize() 
+	royaltyCardList.shuffle()
 	playableCardListTest.shuffle()
+	spawnRoyaltyCards()
 	spawnPlayableCards()
 
 
@@ -54,22 +56,29 @@ func spawnPlayableCards():
 			var _newCard:PlayableCard = preload("res://scenes/PlayableCard.tscn").instantiate()
 			_newCard.suitValue = _cardValue
 			_newCard.global_position = PLAYABLE_POSITIONS[i]
-			_newCard.reparentPlayableCard.connect(reparentPlayableCard)
+			#_newCard.reparentPlayableCard.connect(reparentPlayableCard)
+			for card in royaltyCardsLayer.get_children():
+				_newCard.reparentPlayableCard.connect(Callable(card, "attackedPlayableCards"))
 			playableCardsLayer.add_child(_newCard, true)
 		else :
 			break
 			
 func spawnRoyaltyCards():
-	const PLAYABLE_POSITIONS: Array = [Vector2(36,670), Vector2(162,670), Vector2(288,670)]
+	const ROYALTY_POSITIONS: Array = [Vector2(36,240), Vector2(162,240), Vector2(288,240), Vector2(414,240)]
+	const _royaltyOffset: Vector2 = Vector2(0,10)
 	for i in 3:
-		var _cardValue = playableCardListTest.pop_back()
-		if _cardValue != null:
-			var _newCard:PlayableCard = preload("res://scenes/PlayableCard.tscn").instantiate()
-			_newCard.suitValue = _cardValue
-			_newCard.global_position = PLAYABLE_POSITIONS[i]
-			playableCardsLayer.add_child(_newCard)
-		else :
-			break
+		for j in 4:
+			var _cardValue = royaltyCardList.pop_back()
+			if _cardValue != null:
+				var _newCard:RoyaltyCard = preload("res://scenes/RoyaltyCard.tscn").instantiate()
+				_newCard.suitValue = _cardValue
+				_newCard.global_position = ROYALTY_POSITIONS[j] + (i * _royaltyOffset)
+				if i == 2:
+					_newCard.active = true
+				royaltyCardsLayer.add_child(_newCard, true)
+				
+			else :
+				break
 			
 func reparentPlayableCard(_card: PlayableCard, _royalty: Node2D):
 	var _offsetAttack = _royalty.attackedCardsLayer.get_children().size() * 30
