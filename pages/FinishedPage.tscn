@@ -1,0 +1,262 @@
+[gd_scene load_steps=24 format=3 uid="uid://cygqvd1wchp34"]
+
+[ext_resource type="Texture2D" uid="uid://bpchiwqul5iph" path="res://assets/img/BackgroundQueenBW.png" id="2_514uh"]
+[ext_resource type="Texture2D" uid="uid://bicxdcc6s42er" path="res://assets/img/BackgroundFinishedMenu.png" id="3_148pu"]
+[ext_resource type="FontFile" uid="uid://dgq4ya3cesyrm" path="res://assets/font/nokiafc22.ttf" id="3_scp7b"]
+[ext_resource type="Texture2D" uid="uid://sf76mh0uetu5" path="res://assets/img/FinishedButton.png" id="4_nn317"]
+[ext_resource type="Texture2D" uid="uid://jk2b5cnl1xbi" path="res://assets/img/FinishedButtonOver.png" id="5_4fqod"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4ed7"]
+atlas = ExtResource("3_148pu")
+region = Rect2(0, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uw2lu"]
+atlas = ExtResource("3_148pu")
+region = Rect2(450, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxudi"]
+atlas = ExtResource("3_148pu")
+region = Rect2(900, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhhj1"]
+atlas = ExtResource("3_148pu")
+region = Rect2(1350, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b7oy"]
+atlas = ExtResource("3_148pu")
+region = Rect2(1800, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vh6y1"]
+atlas = ExtResource("3_148pu")
+region = Rect2(2250, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxuja"]
+atlas = ExtResource("3_148pu")
+region = Rect2(2700, 0, 450, 606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj7k5"]
+atlas = ExtResource("3_148pu")
+region = Rect2(3150, 0, 450, 606)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rq32x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4ed7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw2lu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxudi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhhj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2b7oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vh6y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxuja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj7k5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ial58"]
+font = ExtResource("3_scp7b")
+font_size = 45
+font_color = Color(0.188235, 0.611765, 0.388235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_i1ocd"]
+font = ExtResource("3_scp7b")
+font_size = 15
+font_color = Color(0.230469, 0.195313, 0.289063, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2jlgk"]
+font = ExtResource("3_scp7b")
+font_size = 15
+font_color = Color(0.231373, 0.196078, 0.290196, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vaw35"]
+font = ExtResource("3_scp7b")
+font_size = 15
+font_color = Color(0.660156, 0.230469, 0.230469, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_acm63"]
+font = ExtResource("3_scp7b")
+font_size = 15
+font_color = Color(0.660156, 0.230469, 0.230469, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_40gmy"]
+font = ExtResource("3_scp7b")
+font_size = 15
+font_color = Color(0.660156, 0.230469, 0.230469, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_im2oy"]
+texture = ExtResource("4_nn317")
+texture_margin_left = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t42uu"]
+texture = ExtResource("4_nn317")
+texture_margin_left = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hqnkn"]
+texture = ExtResource("5_4fqod")
+texture_margin_left = 5.0
+
+[node name="FinishedPage" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_514uh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(45, 189)
+sprite_frames = SubResource("SpriteFrames_rq32x")
+autoplay = "default"
+frame_progress = 0.510948
+centered = false
+
+[node name="Label" type="Label" parent="."]
+offset_left = 45.0
+offset_top = 310.0
+offset_right = 495.0
+offset_bottom = 370.0
+text = "VICTORY"
+label_settings = SubResource("LabelSettings_ial58")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 370.0
+offset_top = 401.0
+offset_right = 447.0
+offset_bottom = 445.0
+text = "BEST
+SCORE"
+label_settings = SubResource("LabelSettings_i1ocd")
+horizontal_alignment = 1
+
+[node name="DiscardedCards" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="DiscardedCards"]
+offset_left = 78.0
+offset_top = 455.0
+offset_right = 232.0
+offset_bottom = 481.0
+text = "DISCARDED CARDS"
+label_settings = SubResource("LabelSettings_2jlgk")
+
+[node name="Label2" type="Label" parent="DiscardedCards"]
+offset_left = 278.0
+offset_top = 455.0
+offset_right = 334.0
+offset_bottom = 481.0
+text = "99"
+label_settings = SubResource("LabelSettings_vaw35")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="DiscardedCards"]
+offset_left = 378.0
+offset_top = 455.0
+offset_right = 434.0
+offset_bottom = 481.0
+text = "99"
+label_settings = SubResource("LabelSettings_2jlgk")
+horizontal_alignment = 2
+
+[node name="RemainingCards" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="RemainingCards"]
+offset_left = 78.0
+offset_top = 505.0
+offset_right = 236.0
+offset_bottom = 531.0
+text = "REMAINING CARDS"
+label_settings = SubResource("LabelSettings_2jlgk")
+
+[node name="Label2" type="Label" parent="RemainingCards"]
+offset_left = 278.0
+offset_top = 505.0
+offset_right = 334.0
+offset_bottom = 531.0
+text = "99"
+label_settings = SubResource("LabelSettings_acm63")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="RemainingCards"]
+offset_left = 378.0
+offset_top = 505.0
+offset_right = 434.0
+offset_bottom = 531.0
+text = "99"
+label_settings = SubResource("LabelSettings_2jlgk")
+horizontal_alignment = 2
+
+[node name="TotalTime" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="TotalTime"]
+offset_left = 78.0
+offset_top = 555.0
+offset_right = 232.0
+offset_bottom = 581.0
+text = "TOTAL TIME"
+label_settings = SubResource("LabelSettings_2jlgk")
+
+[node name="Label2" type="Label" parent="TotalTime"]
+offset_left = 278.0
+offset_top = 555.0
+offset_right = 334.0
+offset_bottom = 581.0
+text = "12:00"
+label_settings = SubResource("LabelSettings_40gmy")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="TotalTime"]
+offset_left = 378.0
+offset_top = 555.0
+offset_right = 434.0
+offset_bottom = 581.0
+text = "12:00"
+label_settings = SubResource("LabelSettings_2jlgk")
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="."]
+offset_left = 135.0
+offset_top = 668.0
+offset_right = 405.0
+offset_bottom = 748.0
+theme_override_colors/font_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_colors/font_pressed_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_colors/font_hover_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_colors/font_focus_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_colors/font_disabled_color = Color(0.231373, 0.196078, 0.290196, 1)
+theme_override_fonts/font = ExtResource("3_scp7b")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StyleBoxTexture_im2oy")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t42uu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hqnkn")
+text = "PLAY AGAIN"
