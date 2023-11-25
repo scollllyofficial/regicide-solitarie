@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsbspxuwvj0mb"]
+
+[ext_resource type="PackedScene" uid="uid://drh5gc6c6x7bb" path="res://scenes/Deck.tscn" id="1_viie3"]
+[ext_resource type="Script" path="res://pages/BattlePage.gd" id="1_xo1ut"]
+[ext_resource type="PackedScene" uid="uid://dmfumrhsd6e1f" path="res://scenes/RoyaltyCard.tscn" id="3_bqu2x"]
+
+[node name="BattlePage" type="Node2D"]
+script = ExtResource("1_xo1ut")
+
+[node name="Deck" parent="." instance=ExtResource("1_viie3")]
+position = Vector2(414, 670)
+
+[node name="RoyaltyCards" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="RoyaltyCard" parent="RoyaltyCards" instance=ExtResource("3_bqu2x")]
+y_sort_enabled = true
+position = Vector2(221, 230)
+
+[node name="PlayableCards" type="Node2D" parent="."]
