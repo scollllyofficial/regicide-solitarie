@@ -5,7 +5,7 @@ class_name PlayableCard
 signal reparentPlayableCard
 # CARDS ATTRIBUTES
 var suitValue: String
-var value: int
+var playableValue: int
 var suit: String
 
 enum CARD_MOVEMENT { ATTACK, DRAGGED, RELEASED }
@@ -20,9 +20,9 @@ func _ready():
 	movementState = CARD_MOVEMENT.RELEASED
 	if suitValue != null:
 		suit = suitValue.left(1)
-		value = int(suitValue.substr(1))
+		playableValue = int(suitValue.substr(1))
 		animation.animation = suit
-		animation.frame = value -1
+		animation.frame = playableValue - 1
 	initial_position = global_position
 	print("READY")
 	
@@ -64,19 +64,23 @@ func _on_area_2d_area_entered(area):
 	if movementState != CARD_MOVEMENT.ATTACK:	
 		var _royaltyCaryd:RoyaltyCard = area.get_parent()
 		if _royaltyCaryd != null && _royaltyCaryd.active == true:
+			print("Entrando ", _royaltyCaryd.name)
 			royaltyCardToAttack = _royaltyCaryd
 
 func _on_area_2d_area_exited(area):
 	if movementState != CARD_MOVEMENT.ATTACK:
-		var _royaltyCaryd:RoyaltyCard = area.get_parent()
+		var _royaltyCaryd:RoyaltyCard = area.get_parent()		
 		if _royaltyCaryd != null && _royaltyCaryd.active == true:
+			print("Saliendo ", _royaltyCaryd.name)
 			royaltyCardToAttack = null
 		
 func attackToRoyaltyCard():
 	pass
 	
 func releasedMaxAttackedCard():
-	global_position = initial_position
-	royaltyCardToAttack = null
 	movementState = CARD_MOVEMENT.RELEASED
+	royaltyCardToAttack = null
+	global_position = initial_position
+	
+	
 

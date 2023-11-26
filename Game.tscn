@@ -1,11 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3oatqhc8tw11"]
+[gd_scene load_steps=2 format=3 uid="uid://c3oatqhc8tw11"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_b4tps"]
-[ext_resource type="PackedScene" uid="uid://dsbspxuwvj0mb" path="res://pages/BattlePage.tscn" id="2_j8vda"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_b4tps")
 
 [node name="CurrentPage" type="Node2D" parent="."]
-
-[node name="BattlePage" parent="CurrentPage" instance=ExtResource("2_j8vda")]

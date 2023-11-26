@@ -5,6 +5,7 @@ class_name RoyaltyCard
 @onready var attackedCardsLayer: Node2D = $AttackedCards
 
 signal kill
+signal notifyBadCard
 
 var suitValue: String
 var value: int
@@ -28,24 +29,46 @@ func _ready():
 	
 func activate():
 	if suitValue != null:
+		active = true
 		animation.play(suitValue)
 	
-func attackedPlayableCards(_card: PlayableCard, _royalCard: RoyaltyCard):
+func attackedPlayableCards(_playableCard, _royalCard):
 	if _royalCard == self:
-		var _attackedCardSize = attackedCardsLayer.get_children().size()
-		var _offsetAttack = _attackedCardSize * 30
-		attackedPoints += _card.value
-		# Attacked points are ready to kill
-		if _attackedCardSize >= 2: #attackedPoints >= value:
-			if _card.suit != _royalCard.suit:
-				_card.releasedMaxAttackedCard()
+		print(_playableCard.playableValue)
+		if attackedPoints >= value:
+			if _playableCard.suit == suit:
+				reparentPlayableCard(_playableCard, _royalCard)
+				kill.emit()
 			else:
-				readyToKill = true
-		_card.get_parent().remove_child(_card)	
-		attackedCardsLayer.add_child(_card)
-		_card.global_position = global_position + Vector2(0, 30 + _offsetAttack)
-		if readyToKill:
-			kill.emit()
+				_playableCard.releasedMaxAttackedCard()
+				notifyBadCard.emit()
+				return
+		else:
+			if value - (attackedPoints + _playableCard.playableValue) > 10: 
+				if true: # validate as(one) here
+					if _playableCard.playableValue == 1:
+						reparentPlayableCard(_playableCard, _royalCard)
+					else:
+						_playableCard.releasedMaxAttackedCard()
+						notifyBadCard.emit()
+						return
+				else:
+					_playableCard.releasedMaxAttackedCard()
+					notifyBadCard.emit()
+					return
+			else:
+				reparentPlayableCard(_playableCard, _royalCard)
+
+		attackedPoints += _playableCard.playableValue
 
 func killCard():
 	print("kill")
+	
+	
+func reparentPlayableCard(_card, _royalCard):
+	var _attackedCardSize = attackedCardsLayer.get_children().size()
+	var _offsetAttack = _attackedCardSize * 30
+	attackedPoints += _card.playableValue
+	_card.get_parent().remove_child(_card)	
+	attackedCardsLayer.add_child(_card)
+	_card.global_position = global_position + Vector2(0, 30 + _offsetAttack)

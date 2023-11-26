@@ -4,6 +4,9 @@ extends Node2D
 @onready var playableCardsLayer: Node2D = $PlayableCards
 @onready var royaltyCardsLayer: Node2D = $RoyaltyCards
 
+signal win
+signal lose
+
 var playableCardList: Array = [
 	"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", 
 	"D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", 
@@ -18,6 +21,10 @@ var playableCardListTest: Array = [
 ]
 
 
+
+#var royaltyCardList: Array = [
+#	"C11", "C12", "C13", "D11"
+#]
 
 var royaltyCardList: Array = [
 	"C11", "C12", "C13",
@@ -73,16 +80,25 @@ func spawnRoyaltyCards():
 				var _newCard:RoyaltyCard = preload("res://scenes/RoyaltyCard.tscn").instantiate()
 				_newCard.suitValue = _cardValue
 				_newCard.global_position = ROYALTY_POSITIONS[j] + (i * _royaltyOffset)
-				if i == 2:
-					_newCard.active = true
+#				if i == 2:
+#					_newCard.active = true
 				royaltyCardsLayer.add_child(_newCard, true)
 				
 			else :
 				break
+	flipRoyaltyCards()
 			
 func reparentPlayableCard(_card: PlayableCard, _royalty: Node2D):
 	var _offsetAttack = _royalty.attackedCardsLayer.get_children().size() * 30
 	playableCardsLayer.remove_child(_card)	
 	_royalty.attackedCardsLayer.add_child(_card)
 	_card.global_position = _royalty.global_position + Vector2(0, 30 + _offsetAttack)
+	
+func flipRoyaltyCards():
+	var _royaltyCards = royaltyCardsLayer.get_children()
+	if _royaltyCards.size() >= 4:
+		for n in range(_royaltyCards.size()-4,_royaltyCards.size()):
+			_royaltyCards[n].activate()
+		
+	
 	
