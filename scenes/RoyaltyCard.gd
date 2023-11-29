@@ -13,6 +13,7 @@ var suit: String
 var active: bool = false
 var readyToKill: bool = false
 var parentNode: Node2D
+var dieying: bool = false
 
 var attackedPoints: int = 0
 
@@ -35,14 +36,18 @@ func activate():
 	
 func attackedPlayableCards(_playableCard, _royalCard):
 	if _royalCard == self:
+		if dieying:
+			_playableCard.releasedMaxAttackedCard()
+			notifyBadCard.emit("This royalty is dead")
+			return
 		print(_playableCard.playableValue)
 		if attackedPoints >= value:
-			if _playableCard.suit == suit:
+			if _playableCard.suit == suit or _playableCard.suit == "T" or _playableCard.suit == "F":
 				reparentPlayableCard(_playableCard, _royalCard)
 				killCard()
 			else:
 				_playableCard.releasedMaxAttackedCard()
-				notifyBadCard.emit("It takes the same suit to kill royalty")
+				notifyBadCard.emit("It needs the same suit to kill royalty")
 				return
 		else:
 			if attackedPoints > 0:
@@ -65,7 +70,14 @@ func attackedPlayableCards(_playableCard, _royalCard):
 					reparentPlayableCard(_playableCard, _royalCard)
 
 func killCard():
-	print("kill")
+	dieying = true
+	var _aCards = attackedCardsLayer.get_children()
+	for i in _aCards.size():
+		var _aCard = _aCards.pop_back()
+		if _aCard != null:
+			_aCard.destroy()
+			await _aCard.animation.animation_finished
+	#await get_tree().create_timer(1).timeout
 	queue_free()
 	#kill.emit(get_parent())
 	
@@ -76,7 +88,7 @@ func reparentPlayableCard(_card, _royalCard):
 	attackedPoints += _card.playableValue
 	_card.get_parent().remove_child(_card)	
 	attackedCardsLayer.add_child(_card)
-	_card.global_position = global_position + Vector2(0, 40 + _offsetAttack)
+	_card.global_position = global_position + Vector2(0, 30 + _offsetAttack)
 
 
 func _on_tree_exited():

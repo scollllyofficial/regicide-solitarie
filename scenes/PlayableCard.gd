@@ -82,5 +82,9 @@ func releasedMaxAttackedCard():
 	royaltyCardToAttack = null
 	global_position = initial_position
 	
-	
+func destroy():
+	animation.stop()
+	animation.play("destroy")
+	print(animation.animation)
+	#await animation.animation_finished
 

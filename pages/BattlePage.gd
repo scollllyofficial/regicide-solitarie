@@ -4,9 +4,13 @@ extends Node2D
 @onready var playableCardsLayer: Node2D = $PlayableCards
 @onready var royaltyCardsLayer: Node2D = $RoyaltyCards
 @onready var notificationBubble = preload("res://scenes/BattleNotification.tscn")
+@onready var counter: Timer = $Timer
+@onready var gameTimeLabel: Label = $Control/GameTime
 
 signal win
 signal lose
+
+var gameTime: int = 0
 
 var playableCardList: Array = [
 	"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", 
@@ -34,7 +38,7 @@ var royaltyList: Array = [
 	"H11", "H12", "H13"
 ]
 
-var royaltyCards: Array = []
+var remainingPlayableCards: int = 0
 
 func _ready():
 	#Connect signals
@@ -48,6 +52,8 @@ func _ready():
 	spawnRoyaltyCards()
 	spawnPlayableCards()
 
+func _process(delta):
+	buildTimeLabel()
 
 func dealPlayableCards():
 	var _oldPlayableCards: Array = playableCardsLayer.get_children()
@@ -107,12 +113,6 @@ func reparentPlayableCard(_card: PlayableCard, _royalty: Node2D):
 	playableCardsLayer.remove_child(_card)	
 	_royalty.attackedCardsLayer.add_child(_card)
 	_card.global_position = _royalty.global_position + Vector2(0, 30 + _offsetAttack)
-	
-func flipRoyaltyCards():
-	var _royaltyCards = royaltyCardsLayer.get_children()
-	if _royaltyCards.size() >= 4:
-		for n in range(_royaltyCards.size()-4,_royaltyCards.size()):
-			_royaltyCards[n].activate()
 		
 func showNotification(_text: String):
 	var _notification = notificationBubble.instantiate()
@@ -122,4 +122,43 @@ func showNotification(_text: String):
 func killAndActiveCard(_node):
 	print("killAndActiveCard", _node)
 	var _newCard = _node.get_children().pop_back()
-	_newCard.activate()
+	if _newCard != null:
+		_newCard.activate()
+	
+	validateFinishGame()
+	
+func validateFinishGame():
+	var _remainingCards: int = 0
+	var _royaltyLayers = royaltyCardsLayer.get_children()
+	for l in _royaltyLayers.size():
+		var _royaltyNodes = _royaltyLayers[l].get_children()
+		_remainingCards += _royaltyNodes.size()
+		
+	if _remainingCards <= 0:
+		print("win")
+	else:		
+		if royaltyList.size() <= 0:
+			print("lose")
+		else:
+			print("continue")
+		
+	
+func buildTimeLabel():
+	if gameTime > 0:
+		var _min = 0
+		var _seconds = 0
+		if gameTime < 60:
+			_seconds = gameTime
+		else:
+			_min = int(floor(gameTime / 60))
+			_seconds = gameTime % 60
+		gameTimeLabel.text = str(_min).lpad(2,"0") + ":" + str(_seconds).lpad(2,"0")
+		
+		if _min == 59:
+			print("lose")
+	else:
+		gameTimeLabel.text = "00:00"
+
+
+func _on_timer_timeout():
+	gameTime += 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://b5fj3dt7vd4jg"]
+[gd_scene load_steps=52 format=3 uid="uid://b5fj3dt7vd4jg"]
 
 [ext_resource type="Script" path="res://scenes/PlayableCard.gd" id="1_lfqaf"]
 [ext_resource type="Texture2D" uid="uid://n36w0ks3i384" path="res://assets/img/cards/clubs/C1.png" id="2_3bep7"]
@@ -44,6 +44,11 @@
 [ext_resource type="Texture2D" uid="uid://dburvwt2moc2u" path="res://assets/img/cards/spades/S8.png" id="36_f8soy"]
 [ext_resource type="Texture2D" uid="uid://bj47p31flrw5f" path="res://assets/img/cards/spades/S9.png" id="37_5avjp"]
 [ext_resource type="Texture2D" uid="uid://cr20savsh57mv" path="res://assets/img/cards/spades/S10.png" id="38_v2uue"]
+[ext_resource type="Texture2D" uid="uid://5tkkhejqj5dp" path="res://assets/img/cards/destroy/Destroy.png" id="45_txy7a"]
+[ext_resource type="Texture2D" uid="uid://dpaicm0eyhv71" path="res://assets/img/cards/destroy/Destroy2.png" id="47_hpdjk"]
+[ext_resource type="Texture2D" uid="uid://rakriy7jwxjp" path="res://assets/img/cards/destroy/Destroy4.png" id="49_50fs5"]
+[ext_resource type="Texture2D" uid="uid://6olvuj68uux5" path="res://assets/img/cards/destroy/Destroy5.png" id="50_jayb2"]
+[ext_resource type="Texture2D" uid="uid://du3lxi37wvn7o" path="res://assets/img/cards/destroy/Destroy6.png" id="51_enrff"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ucry8"]
 animations = [{
@@ -264,6 +269,26 @@ animations = [{
 "loop": false,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("45_txy7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_hpdjk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_50fs5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_jayb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_enrff")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 12.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlefx"]
@@ -274,7 +299,9 @@ script = ExtResource("1_lfqaf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ucry8")
-animation = &"S"
+animation = &"destroy"
+frame = 4
+frame_progress = 1.0
 centered = false
 
 [node name="Area2D" type="Area2D" parent="."]

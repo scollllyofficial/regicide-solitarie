@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d28mlnn4aa0r3"
-path="res://.godot/imported/BattleNotification.png-49fdf9a65897be18297e17c0afe09458.ctex"
+uid="uid://dpaicm0eyhv71"
+path="res://.godot/imported/Destroy2.png-7435e5e4942304a11335a33bf7a3df2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/BattleNotification.png"
-dest_files=["res://.godot/imported/BattleNotification.png-49fdf9a65897be18297e17c0afe09458.ctex"]
+source_file="res://assets/img/cards/destroy/Destroy2.png"
+dest_files=["res://.godot/imported/Destroy2.png-7435e5e4942304a11335a33bf7a3df2d.ctex"]
 
 [params]
 

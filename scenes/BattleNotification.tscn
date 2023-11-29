@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bfg5p6ifjupej"]
 
 [ext_resource type="Script" path="res://scenes/BattleNotification.gd" id="1_5jgm2"]
-[ext_resource type="Texture2D" uid="uid://d28mlnn4aa0r3" path="res://assets/img/BattleNotification.png" id="1_v4ykd"]
+[ext_resource type="Texture2D" uid="uid://bxj62wf0nb6b1" path="res://assets/img/battle/BattleNotification.png" id="2_ic4ae"]
 [ext_resource type="FontFile" uid="uid://dgq4ya3cesyrm" path="res://assets/font/nokiafc22.ttf" id="2_wmp4s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ppej3"]
@@ -49,7 +49,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, -50), Vector2(0, 0)]
+"values": [Vector2(0, 960), Vector2(0, 900)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -58,7 +58,7 @@ tracks/1/path = NodePath("Notification:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 2, 3),
+"times": PackedFloat32Array(0, 2.5, 3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -82,10 +82,10 @@ metadata/_edit_group_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Notification"]
 layout_mode = 0
-offset_left = 135.0
-offset_right = 405.0
+offset_left = 115.0
+offset_right = 430.0
 offset_bottom = 45.0
-texture = ExtResource("1_v4ykd")
+texture = ExtResource("2_ic4ae")
 
 [node name="Label" type="Label" parent="Notification"]
 layout_mode = 0
