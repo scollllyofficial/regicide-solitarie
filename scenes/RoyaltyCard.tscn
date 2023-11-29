@@ -759,7 +759,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlefx"]
-size = Vector2(90, 126)
+size = Vector2(30, 126)
 
 [node name="RoyaltyCard" type="Node2D"]
 script = ExtResource("1_xcukk")
@@ -777,3 +777,5 @@ position = Vector2(45, 63)
 shape = SubResource("RectangleShape2D_nlefx")
 
 [node name="AttackedCards" type="Node2D" parent="."]
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]

@@ -12,14 +12,15 @@ var value: int
 var suit: String
 var active: bool = false
 var readyToKill: bool = false
+var parentNode: Node2D
 
 var attackedPoints: int = 0
 
 func _ready():
 	
 	#Signals
-	kill.connect(killCard)
-	
+	#kill.connect(killCard)
+	parentNode = get_parent()
 	if suitValue != null:
 		suit = suitValue.left(1)
 		value = int(suitValue.substr(1))
@@ -38,31 +39,35 @@ func attackedPlayableCards(_playableCard, _royalCard):
 		if attackedPoints >= value:
 			if _playableCard.suit == suit:
 				reparentPlayableCard(_playableCard, _royalCard)
-				kill.emit()
+				killCard()
 			else:
 				_playableCard.releasedMaxAttackedCard()
-				notifyBadCard.emit()
+				notifyBadCard.emit("It takes the same suit to kill royalty")
 				return
 		else:
-			if value - (attackedPoints + _playableCard.playableValue) > 10: 
-				if true: # validate as(one) here
-					if _playableCard.playableValue == 1:
+			if attackedPoints > 0:
+				if attackedPoints + _playableCard.playableValue >= value: 
+					reparentPlayableCard(_playableCard, _royalCard)
+				else:
+					_playableCard.releasedMaxAttackedCard()
+					notifyBadCard.emit("This card is not high enough :(")
+					return
+			else:
+				if value-(attackedPoints + _playableCard.playableValue) > 10: 
+					if _playableCard.playableValue == 1:# and Global.stackableAces:
 						reparentPlayableCard(_playableCard, _royalCard)
 					else:
 						_playableCard.releasedMaxAttackedCard()
-						notifyBadCard.emit()
+						notifyBadCard.emit("This card is not high enough :(")
 						return
+					
 				else:
-					_playableCard.releasedMaxAttackedCard()
-					notifyBadCard.emit()
-					return
-			else:
-				reparentPlayableCard(_playableCard, _royalCard)
-
-		attackedPoints += _playableCard.playableValue
+					reparentPlayableCard(_playableCard, _royalCard)
 
 func killCard():
 	print("kill")
+	queue_free()
+	#kill.emit(get_parent())
 	
 	
 func reparentPlayableCard(_card, _royalCard):
@@ -71,4 +76,8 @@ func reparentPlayableCard(_card, _royalCard):
 	attackedPoints += _card.playableValue
 	_card.get_parent().remove_child(_card)	
 	attackedCardsLayer.add_child(_card)
-	_card.global_position = global_position + Vector2(0, 30 + _offsetAttack)
+	_card.global_position = global_position + Vector2(0, 40 + _offsetAttack)
+
+
+func _on_tree_exited():
+	kill.emit(parentNode)

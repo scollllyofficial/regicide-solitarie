@@ -3,6 +3,7 @@ extends Node2D
 @onready var deckButton: Deck = $Deck
 @onready var playableCardsLayer: Node2D = $PlayableCards
 @onready var royaltyCardsLayer: Node2D = $RoyaltyCards
+@onready var notificationBubble = preload("res://scenes/BattleNotification.tscn")
 
 signal win
 signal lose
@@ -26,12 +27,14 @@ var playableCardListTest: Array = [
 #	"C11", "C12", "C13", "D11"
 #]
 
-var royaltyCardList: Array = [
+var royaltyList: Array = [
 	"C11", "C12", "C13",
 	"D11", "D12", "D13",
 	"S11", "S12", "S13",
 	"H11", "H12", "H13"
 ]
+
+var royaltyCards: Array = []
 
 func _ready():
 	#Connect signals
@@ -40,8 +43,8 @@ func _ready():
 	
 	#Spawn playableCards 
 	randomize() 
-	royaltyCardList.shuffle()
-	playableCardListTest.shuffle()
+	royaltyList.shuffle()
+	playableCardList.shuffle()
 	spawnRoyaltyCards()
 	spawnPlayableCards()
 
@@ -57,15 +60,18 @@ func dealPlayableCards():
 
 func spawnPlayableCards():
 	const PLAYABLE_POSITIONS: Array = [Vector2(36,670), Vector2(162,670), Vector2(288,670)]
+	var _royaltyLayers = royaltyCardsLayer.get_children()
 	for i in 3:
-		var _cardValue = playableCardListTest.pop_back()
+		var _cardValue = playableCardList.pop_back()
 		if _cardValue != null:
 			var _newCard:PlayableCard = preload("res://scenes/PlayableCard.tscn").instantiate()
 			_newCard.suitValue = _cardValue
 			_newCard.global_position = PLAYABLE_POSITIONS[i]
 			#_newCard.reparentPlayableCard.connect(reparentPlayableCard)
-			for card in royaltyCardsLayer.get_children():
-				_newCard.reparentPlayableCard.connect(Callable(card, "attackedPlayableCards"))
+			for l in _royaltyLayers.size():
+				var _royaltyNodes = _royaltyLayers[l].get_children()
+				for m in _royaltyNodes.size():
+					_newCard.reparentPlayableCard.connect(Callable(_royaltyNodes[m], "attackedPlayableCards"))
 			playableCardsLayer.add_child(_newCard, true)
 		else :
 			break
@@ -73,20 +79,28 @@ func spawnPlayableCards():
 func spawnRoyaltyCards():
 	const ROYALTY_POSITIONS: Array = [Vector2(36,240), Vector2(162,240), Vector2(288,240), Vector2(414,240)]
 	const _royaltyOffset: Vector2 = Vector2(0,10)
-	for i in 3:
-		for j in 4:
-			var _cardValue = royaltyCardList.pop_back()
+
+	
+	for i in 4:
+		var _column = Node2D.new()
+		_column.name = str(i)
+		royaltyCardsLayer.add_child(_column, true)
+		for j in 3:
+			var _cardValue = royaltyList.pop_back()
 			if _cardValue != null:
 				var _newCard:RoyaltyCard = preload("res://scenes/RoyaltyCard.tscn").instantiate()
 				_newCard.suitValue = _cardValue
-				_newCard.global_position = ROYALTY_POSITIONS[j] + (i * _royaltyOffset)
-#				if i == 2:
-#					_newCard.active = true
-				royaltyCardsLayer.add_child(_newCard, true)
+				_newCard.global_position = ROYALTY_POSITIONS[i] + (j* _royaltyOffset)
+				if j == 2:
+					_newCard.active = true
+				_newCard.notifyBadCard.connect(showNotification)
+				#_newCard.connect("tree_exited", Callable(self, "killAndActiveCard"))
+				_newCard.kill.connect(killAndActiveCard)
+				_column.add_child(_newCard, true)
 				
 			else :
 				break
-	flipRoyaltyCards()
+	#flipRoyaltyCards()
 			
 func reparentPlayableCard(_card: PlayableCard, _royalty: Node2D):
 	var _offsetAttack = _royalty.attackedCardsLayer.get_children().size() * 30
@@ -100,5 +114,12 @@ func flipRoyaltyCards():
 		for n in range(_royaltyCards.size()-4,_royaltyCards.size()):
 			_royaltyCards[n].activate()
 		
+func showNotification(_text: String):
+	var _notification = notificationBubble.instantiate()
+	_notification.message = _text
+	add_child(_notification, true)
 	
-	
+func killAndActiveCard(_node):
+	print("killAndActiveCard", _node)
+	var _newCard = _node.get_children().pop_back()
+	_newCard.activate()
